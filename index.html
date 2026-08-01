@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cursos de Excel - Sandra Infante</title>
 
-<script src="https://www.paypal.com/sdk/js?client-id=AQjsKr-mCYAxSAOx_0Azxop1vw2R7kxqC4abCeC6pZBzNLK1sNjWI3DZh6iyJtpkpHmQ7EMFyV7S7_Wr&currency=MXN"></script>
+<!-- PAYPAL MEJORADO -->
+<script src="https://www.paypal.com/sdk/js?client-id=AQjsKr-mCYAxSAOx_0Azxop1vw2R7kxqC4abCeC6pZBzNLK1sNjWI3DZh6iyJtpkpHmQ7EMFyV7S7_Wr&currency=MXN&components=buttons,funding-eligibility"></script>
 
 <style>
 
@@ -15,7 +16,6 @@ body{
   background:#f5f5f5;
 }
 
-/* HEADER */
 header{
   text-align:center;
   background:#0a5c36;
@@ -23,13 +23,11 @@ header{
   padding:20px;
 }
 
-/* CONTENEDOR PRINCIPAL */
 .contenedor{
   display:flex;
   flex-wrap:wrap;
 }
 
-/* PRODUCTOS */
 .productos{
   flex:3;
   display:grid;
@@ -51,7 +49,6 @@ header{
   max-width:180px;
 }
 
-/* BOTONES */
 button{
   background:#0a5c36;
   color:white;
@@ -61,11 +58,11 @@ button{
   border-radius:5px;
 }
 
-button:hover{
-  background:#084d2c;
+.eliminar{
+  background:red;
+  padding:2px 6px;
 }
 
-/* 🛒 CARRITO LATERAL */
 .carrito{
   flex:1;
   min-width:300px;
@@ -78,58 +75,27 @@ button:hover{
   overflow:auto;
 }
 
-.carrito h3{
-  margin-top:0;
-}
-
-.carrito ul{
-  padding:0;
-}
-
 .carrito li{
-  list-style:none;
   display:flex;
   justify-content:space-between;
-  margin-bottom:5px;
-  font-size:14px;
-}
-
-.eliminar{
-  background:red;
-  border:none;
-  color:white;
-  cursor:pointer;
-  border-radius:3px;
-  padding:2px 6px;
 }
 
 .total{
   font-weight:bold;
   margin-top:10px;
-  font-size:18px;
 }
 
-/* PAYPAL ESPACIO */
-#paypal-button-container{
-  margin-top:20px;
+/* DESCARGAS */
+.descargas{
+  padding:20px;
+  display:none;
 }
 
-/* 📱 RESPONSIVE */
-@media(max-width:768px){
-
-  .contenedor{
-    flex-direction:column;
-  }
-
-  .carrito{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    height:auto;
-    border-left:none;
-    border-top:4px solid #0a5c36;
-  }
-
+.descargas a{
+  display:block;
+  margin:10px 0;
+  color:green;
+  font-weight:bold;
 }
 
 </style>
@@ -146,44 +112,41 @@ button:hover{
 <section class="productos">
 
 <div class="producto">
-  <img src="img/logo excel basico.png">
   <h2>Excel Básico</h2>
   <p>$600 MXN</p>
-  <button onclick="agregarCarrito('Excel Básico',600)">Agregar</button>
+  <button onclick="agregarCarrito('basico',600)">Agregar</button>
 </div>
 
 <div class="producto">
-  <img src="img/logo excel intermedio.png">
   <h2>Excel Intermedio</h2>
   <p>$600 MXN</p>
-  <button onclick="agregarCarrito('Excel Intermedio',600)">Agregar</button>
+  <button onclick="agregarCarrito('intermedio',600)">Agregar</button>
 </div>
 
 <div class="producto">
-  <img src="img/logo Excel Avanzado.png">
   <h2>Excel Avanzado</h2>
   <p>$600 MXN</p>
-  <button onclick="agregarCarrito('Excel Avanzado',600)">Agregar</button>
-</div>
-
-<div class="producto">
-  <img src="img/logo power bi basico.png">
-  <h2>Power BI Básico</h2>
-  <p>$600 MXN</p>
-  <button onclick="agregarCarrito('Power BI Básico',600)">Agregar</button>
+  <button onclick="agregarCarrito('avanzado',600)">Agregar</button>
 </div>
 
 </section>
 
-<!-- 🛒 CARRITO -->
 <div class="carrito">
   <h3>🛒 Carrito</h3>
   <ul id="lista-carrito"></ul>
-  <p class="total" id="total">Total: $0 MXN</p>
-
+  <p class="total" id="total">Total: $0</p>
   <div id="paypal-button-container"></div>
 </div>
 
+</div>
+
+<!-- 🔓 DESCARGAS -->
+<div class="descargas" id="descargas">
+  <h2>📥 Tus cursos</h2>
+
+  <a id="basico" href="cursos/excel_basico.zip" target="_blank">Descargar Excel Básico</a>
+  <a id="intermedio" href="cursos/excel_intermedio.zip" target="_blank">Descargar Excel Intermedio</a>
+  <a id="avanzado" href="cursos/excel_avanzado.zip" target="_blank">Descargar Excel Avanzado</a>
 </div>
 
 <script>
@@ -198,29 +161,38 @@ function agregarCarrito(nombre, precio){
   renderPayPal();
 }
 
-function eliminarProducto(index){
-  total -= carrito[index].precio;
-  carrito.splice(index,1);
-  mostrarCarrito();
-  renderPayPal();
-}
-
 function mostrarCarrito(){
   let lista = document.getElementById("lista-carrito");
   lista.innerHTML = "";
 
-  carrito.forEach((item,index) => {
-    let li = document.createElement("li");
-    li.innerHTML = `
-      ${item.nombre} - $${item.precio}
-      <button class="eliminar" onclick="eliminarProducto(${index})">X</button>
-    `;
-    lista.appendChild(li);
+  carrito.forEach((item,i)=>{
+    lista.innerHTML += `<li>${item.nombre} $${item.precio}
+    <button onclick="eliminar(${i})">X</button></li>`;
   });
 
-  document.getElementById("total").textContent = "Total: $" + total + " MXN";
+  document.getElementById("total").textContent = "Total: $" + total;
 }
 
+function eliminar(i){
+  total -= carrito[i].precio;
+  carrito.splice(i,1);
+  mostrarCarrito();
+  renderPayPal();
+}
+
+/* 🔓 DESBLOQUEAR */
+function desbloquearDescargas(){
+
+  document.getElementById("descargas").style.display = "block";
+
+  carrito.forEach(item=>{
+    document.getElementById(item.nombre).style.display = "block";
+  });
+
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+/* 💰 PAYPAL */
 function renderPayPal(){
 
   document.getElementById("paypal-button-container").innerHTML = "";
@@ -229,35 +201,31 @@ function renderPayPal(){
 
   paypal.Buttons({
 
-    style: {
-      layout: 'vertical',
-      color: 'gold',
-      shape: 'rect',
-      label: 'paypal'
-    },
+    fundingSource: paypal.FUNDING.PAYPAL,
 
-    createOrder: function(data, actions){
+    createOrder: (data, actions)=>{
       return actions.order.create({
         purchase_units: [{
-          amount: {
-            value: total.toFixed(2)
-          }
+          amount: { value: total.toFixed(2) }
         }]
       });
     },
 
-    onApprove: function(data, actions){
-      return actions.order.capture().then(function(details){
-        alert("✅ Pago completado por " + details.payer.name.given_name);
+    onApprove: (data, actions)=>{
+      return actions.order.capture().then(()=>{
+        alert("Pago completado");
 
-        carrito = [];
-        total = 0;
+        desbloquearDescargas();
+
+        carrito=[];
+        total=0;
         mostrarCarrito();
         renderPayPal();
       });
     }
 
   }).render('#paypal-button-container');
+
 }
 
 </script>
