@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cursos de Excel - Sandra Infante</title>
 
-<!-- PAYPAL REAL -->
 <script src="https://www.paypal.com/sdk/js?client-id=AQjsKr-mCYAxSAOx_0Azxop1vw2R7kxqC4abCeC6pZBzNLK1sNjWI3DZh6iyJtpkpHmQ7EMFyV7S7_Wr&currency=MXN"></script>
 
 <style>
@@ -14,9 +13,9 @@ body{
   margin:0;
   font-family: Arial, sans-serif;
   background:#f5f5f5;
-  padding-bottom:180px;
 }
 
+/* HEADER */
 header{
   text-align:center;
   background:#0a5c36;
@@ -24,7 +23,15 @@ header{
   padding:20px;
 }
 
+/* CONTENEDOR PRINCIPAL */
+.contenedor{
+  display:flex;
+  flex-wrap:wrap;
+}
+
+/* PRODUCTOS */
 .productos{
+  flex:3;
   display:grid;
   grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
   gap:20px;
@@ -44,6 +51,7 @@ header{
   max-width:180px;
 }
 
+/* BOTONES */
 button{
   background:#0a5c36;
   color:white;
@@ -57,20 +65,24 @@ button:hover{
   background:#084d2c;
 }
 
+/* 🛒 CARRITO LATERAL */
 .carrito{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
+  flex:1;
+  min-width:300px;
   background:white;
-  border-top:4px solid #0a5c36;
+  border-left:4px solid #0a5c36;
   padding:15px;
-  box-shadow:0 -2px 15px rgba(0,0,0,0.2);
+  height:100vh;
+  position:sticky;
+  top:0;
+  overflow:auto;
+}
+
+.carrito h3{
+  margin-top:0;
 }
 
 .carrito ul{
-  max-height:120px;
-  overflow:auto;
   padding:0;
 }
 
@@ -94,10 +106,30 @@ button:hover{
 .total{
   font-weight:bold;
   margin-top:10px;
+  font-size:18px;
 }
 
+/* PAYPAL ESPACIO */
 #paypal-button-container{
-  margin-top:10px;
+  margin-top:20px;
+}
+
+/* 📱 RESPONSIVE */
+@media(max-width:768px){
+
+  .contenedor{
+    flex-direction:column;
+  }
+
+  .carrito{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:auto;
+    border-left:none;
+    border-top:4px solid #0a5c36;
+  }
+
 }
 
 </style>
@@ -108,6 +140,8 @@ button:hover{
 <header>
   <h1>📊 Cursos de Excel & Power BI</h1>
 </header>
+
+<div class="contenedor">
 
 <section class="productos">
 
@@ -141,12 +175,15 @@ button:hover{
 
 </section>
 
+<!-- 🛒 CARRITO -->
 <div class="carrito">
   <h3>🛒 Carrito</h3>
   <ul id="lista-carrito"></ul>
   <p class="total" id="total">Total: $0 MXN</p>
 
   <div id="paypal-button-container"></div>
+</div>
+
 </div>
 
 <script>
@@ -191,6 +228,13 @@ function renderPayPal(){
   if(total === 0) return;
 
   paypal.Buttons({
+
+    style: {
+      layout: 'vertical',
+      color: 'gold',
+      shape: 'rect',
+      label: 'paypal'
+    },
 
     createOrder: function(data, actions){
       return actions.order.create({
