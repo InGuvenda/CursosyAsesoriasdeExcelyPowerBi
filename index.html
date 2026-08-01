@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cursos de Excel - Sandra Infante</title>
 
-<!-- PAYPAL REAL -->
 <script src="https://www.paypal.com/sdk/js?client-id=AQjsKr-mCYAxSAOx_0Azxop1vw2R7kxqC4abCeC6pZBzNLK1sNjWI3DZh6iyJtpkpHmQ7EMFyV7S7_Wr&currency=MXN"></script>
 
 <style>
@@ -41,6 +40,11 @@ header{
   border-radius:10px;
   text-align:center;
   box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.producto img{
+  width:120px;
+  margin-bottom:10px;
 }
 
 button{
@@ -92,25 +96,40 @@ button{
 
 <section class="productos">
 
+<!-- EXCEL BASICO -->
 <div class="producto">
+  <img src="imagenes/excel.png">
   <h2>Excel Básico</h2>
   <p>Aprende desde cero</p>
   <p><b>$600 MXN</b></p>
   <button onclick="agregarCarrito('basico',600)">Agregar</button>
 </div>
 
+<!-- EXCEL INTERMEDIO -->
 <div class="producto">
+  <img src="imagenes/excel.png">
   <h2>Excel Intermedio</h2>
   <p>Fórmulas y funciones</p>
   <p><b>$600 MXN</b></p>
   <button onclick="agregarCarrito('intermedio',600)">Agregar</button>
 </div>
 
+<!-- EXCEL AVANZADO -->
 <div class="producto">
+  <img src="imagenes/excel.png">
   <h2>Excel Avanzado</h2>
   <p>Macros y automatización</p>
   <p><b>$600 MXN</b></p>
   <button onclick="agregarCarrito('avanzado',600)">Agregar</button>
+</div>
+
+<!-- 🔥 NUEVO POWER BI -->
+<div class="producto">
+  <img src="imagenes/powerbi.png">
+  <h2>Power BI Básico</h2>
+  <p>Dashboards y análisis</p>
+  <p><b>$600 MXN</b></p>
+  <button onclick="agregarCarrito('powerbi',600)">Agregar</button>
 </div>
 
 </section>
@@ -131,6 +150,7 @@ button{
   <a id="link-basico" href="cursos/excel_basico.zip" target="_blank">Excel Básico</a>
   <a id="link-intermedio" href="cursos/excel_intermedio.zip" target="_blank">Excel Intermedio</a>
   <a id="link-avanzado" href="cursos/excel_avanzado.zip" target="_blank">Excel Avanzado</a>
+  <a id="link-powerbi" href="cursos/powerbi_basico.zip" target="_blank">Power BI Básico</a>
 </div>
 
 <script>
@@ -164,12 +184,10 @@ function eliminar(i){
   renderPayPal();
 }
 
-/* DESBLOQUEO SEGURO */
 function desbloquearDescargas(){
 
   document.getElementById("descargas").style.display = "block";
 
-  // Ocultar todos primero
   document.querySelectorAll(".descargas a").forEach(a=>{
     a.style.display = "none";
   });
@@ -181,7 +199,6 @@ function desbloquearDescargas(){
   window.scrollTo(0,document.body.scrollHeight);
 }
 
-/* PAYPAL */
 function renderPayPal(){
 
   document.getElementById("paypal-button-container").innerHTML = "";
@@ -193,7 +210,7 @@ function renderPayPal(){
     createOrder: (data, actions)=>{
       return actions.order.create({
         purchase_units: [{
-          description: "Cursos Excel Sandra Infante",
+          description: "Cursos Excel y Power BI",
           amount: { value: total.toFixed(2) }
         }]
       });
