@@ -5,14 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cursos de Excel - Sandra Infante</title>
 
-<!-- PAYPAL MEJORADO -->
-<script src="https://www.paypal.com/sdk/js?client-id=AQjsKr-mCYAxSAOx_0Azxop1vw2R7kxqC4abCeC6pZBzNLK1sNjWI3DZh6iyJtpkpHmQ7EMFyV7S7_Wr&currency=MXN&components=buttons,funding-eligibility"></script>
+<!-- PAYPAL REAL -->
+<script src="https://www.paypal.com/sdk/js?client-id=AQjsKr-mCYAxSAOx_0Azxop1vw2R7kxqC4abCeC6pZBzNLK1sNjWI3DZh6iyJtpkpHmQ7EMFyV7S7_Wr&currency=MXN"></script>
 
 <style>
-
 body{
   margin:0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background:#f5f5f5;
 }
 
@@ -44,11 +43,6 @@ header{
   box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
-.producto img{
-  width:100%;
-  max-width:180px;
-}
-
 button{
   background:#0a5c36;
   color:white;
@@ -56,11 +50,6 @@ button{
   padding:10px;
   cursor:pointer;
   border-radius:5px;
-}
-
-.eliminar{
-  background:red;
-  padding:2px 6px;
 }
 
 .carrito{
@@ -72,12 +61,6 @@ button{
   height:100vh;
   position:sticky;
   top:0;
-  overflow:auto;
-}
-
-.carrito li{
-  display:flex;
-  justify-content:space-between;
 }
 
 .total{
@@ -85,7 +68,6 @@ button{
   margin-top:10px;
 }
 
-/* DESCARGAS */
 .descargas{
   padding:20px;
   display:none;
@@ -97,7 +79,6 @@ button{
   color:green;
   font-weight:bold;
 }
-
 </style>
 </head>
 
@@ -113,19 +94,22 @@ button{
 
 <div class="producto">
   <h2>Excel Básico</h2>
-  <p>$600 MXN</p>
+  <p>Aprende desde cero</p>
+  <p><b>$600 MXN</b></p>
   <button onclick="agregarCarrito('basico',600)">Agregar</button>
 </div>
 
 <div class="producto">
   <h2>Excel Intermedio</h2>
-  <p>$600 MXN</p>
+  <p>Fórmulas y funciones</p>
+  <p><b>$600 MXN</b></p>
   <button onclick="agregarCarrito('intermedio',600)">Agregar</button>
 </div>
 
 <div class="producto">
   <h2>Excel Avanzado</h2>
-  <p>$600 MXN</p>
+  <p>Macros y automatización</p>
+  <p><b>$600 MXN</b></p>
   <button onclick="agregarCarrito('avanzado',600)">Agregar</button>
 </div>
 
@@ -140,13 +124,13 @@ button{
 
 </div>
 
-<!-- 🔓 DESCARGAS -->
+<!-- DESCARGAS -->
 <div class="descargas" id="descargas">
-  <h2>📥 Tus cursos</h2>
+  <h2>📥 Descarga tus cursos</h2>
 
-  <a id="basico" href="cursos/excel_basico.zip" target="_blank">Descargar Excel Básico</a>
-  <a id="intermedio" href="cursos/excel_intermedio.zip" target="_blank">Descargar Excel Intermedio</a>
-  <a id="avanzado" href="cursos/excel_avanzado.zip" target="_blank">Descargar Excel Avanzado</a>
+  <a id="link-basico" href="cursos/excel_basico.zip" target="_blank">Excel Básico</a>
+  <a id="link-intermedio" href="cursos/excel_intermedio.zip" target="_blank">Excel Intermedio</a>
+  <a id="link-avanzado" href="cursos/excel_avanzado.zip" target="_blank">Excel Avanzado</a>
 </div>
 
 <script>
@@ -166,8 +150,8 @@ function mostrarCarrito(){
   lista.innerHTML = "";
 
   carrito.forEach((item,i)=>{
-    lista.innerHTML += `<li>${item.nombre} $${item.precio}
-    <button onclick="eliminar(${i})">X</button></li>`;
+    lista.innerHTML += `<li>${item.nombre} - $${item.precio}
+    <button onclick="eliminar(${i})">❌</button></li>`;
   });
 
   document.getElementById("total").textContent = "Total: $" + total;
@@ -180,19 +164,24 @@ function eliminar(i){
   renderPayPal();
 }
 
-/* 🔓 DESBLOQUEAR */
+/* DESBLOQUEO SEGURO */
 function desbloquearDescargas(){
 
   document.getElementById("descargas").style.display = "block";
 
+  // Ocultar todos primero
+  document.querySelectorAll(".descargas a").forEach(a=>{
+    a.style.display = "none";
+  });
+
   carrito.forEach(item=>{
-    document.getElementById(item.nombre).style.display = "block";
+    document.getElementById("link-"+item.nombre).style.display = "block";
   });
 
   window.scrollTo(0,document.body.scrollHeight);
 }
 
-/* 💰 PAYPAL */
+/* PAYPAL */
 function renderPayPal(){
 
   document.getElementById("paypal-button-container").innerHTML = "";
@@ -201,27 +190,34 @@ function renderPayPal(){
 
   paypal.Buttons({
 
-    fundingSource: paypal.FUNDING.PAYPAL,
-
     createOrder: (data, actions)=>{
       return actions.order.create({
         purchase_units: [{
+          description: "Cursos Excel Sandra Infante",
           amount: { value: total.toFixed(2) }
         }]
       });
     },
 
     onApprove: (data, actions)=>{
-      return actions.order.capture().then(()=>{
-        alert("Pago completado");
+      return actions.order.capture().then((details)=>{
+
+        alert("Pago completado por " + details.payer.name.given_name);
 
         desbloquearDescargas();
 
-        carrito=[];
-        total=0;
+        carrito = [];
+        total = 0;
+
         mostrarCarrito();
         renderPayPal();
+
       });
+    },
+
+    onError: (err)=>{
+      alert("Error en el pago");
+      console.log(err);
     }
 
   }).render('#paypal-button-container');
