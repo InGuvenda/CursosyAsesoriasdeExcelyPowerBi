@@ -4,7 +4,100 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cursos de Excel - Sandra Infante</title>
-<link rel="stylesheet" href="estilos.css">
+
+<style>
+
+/* RESET */
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f5f5f5;
+}
+
+/* HEADER */
+header{
+  text-align:center;
+  background:#0a5c36;
+  color:white;
+  padding:20px;
+}
+
+/* PRODUCTOS */
+.productos{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap:20px;
+  padding:20px;
+}
+
+.producto{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.producto img{
+  width:100%;
+  max-width:180px;
+}
+
+button{
+  background:#0a5c36;
+  color:white;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+  border-radius:5px;
+}
+
+button:hover{
+  background:#084d2c;
+}
+
+/* BOTON BLOQUEADO */
+.bloqueado{
+  background:gray;
+  cursor:not-allowed;
+}
+
+/* CARRITO */
+.carrito{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:white;
+  border-top:3px solid #0a5c36;
+  padding:10px;
+  box-shadow:0 -2px 10px rgba(0,0,0,0.2);
+}
+
+.carrito ul{
+  max-height:100px;
+  overflow:auto;
+  padding:0;
+}
+
+.carrito li{
+  list-style:none;
+}
+
+/* ESPACIO PARA QUE NO TAPE */
+body{
+  padding-bottom:150px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  header h1{
+    font-size:20px;
+  }
+}
+
+</style>
+
 </head>
 
 <body>
@@ -18,7 +111,7 @@
 
   <!-- CURSO 1 -->
   <div class="producto">
-    <img src="img/logo excel basico.png" alt="Excel Básico">
+    <img src="img/logo excel basico.png">
     <h2>Excel Básico</h2>
     <p>$600 MXN</p>
 
@@ -28,14 +121,12 @@
 
     <br><br>
 
-    <a href="archivos/CURSO BASICO DE EXCEL 2026.xlsx" download>
-      📥 Descargar muestra
-    </a>
+    <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
   <!-- CURSO 2 -->
   <div class="producto">
-    <img src="img/logo excel intermedio.png" alt="Excel Intermedio">
+    <img src="img/logo excel intermedio.png">
     <h2>Excel Intermedio</h2>
     <p>$600 MXN</p>
 
@@ -45,14 +136,12 @@
 
     <br><br>
 
-    <a href="archivos/CURSO MEDIO DE EXCEL 2026.xlsx" download>
-      📥 Descargar muestra
-    </a>
+    <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
   <!-- CURSO 3 -->
   <div class="producto">
-    <img src="img/logo Excel Avanzado.png" alt="Excel Avanzado">
+    <img src="img/logo Excel Avanzado.png">
     <h2>Excel Avanzado</h2>
     <p>$800 MXN</p>
 
@@ -62,16 +151,14 @@
 
     <br><br>
 
-    <a href="archivos/CURSO AVANZADO DE EXCEL.pdf" download>
-      📥 Descargar muestra
-    </a>
+    <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
   <!-- CURSO 4 -->
   <div class="producto">
-    <img src="img/logo power bi basico.png" alt="Power BI">
+    <img src="img/logo power bi basico.png">
     <h2>Power BI Básico</h2>
-    <p>$600 MXN</p>
+    <p>$349 MXN</p>
 
     <button onclick="agregarCarrito('Power BI Básico',349)">
       Agregar al carrito
@@ -79,9 +166,7 @@
 
     <br><br>
 
-    <a href="archivos/FASHION CITY.pbix" download>
-      📥 Descargar muestra
-    </a>
+    <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
 </section>
@@ -99,8 +184,52 @@
   </button>
 </div>
 
-<!-- JS -->
-<script src="script.js"></script>
+<script>
+
+let carrito = [];
+let total = 0;
+
+function agregarCarrito(nombre, precio){
+    carrito.push({nombre, precio});
+    total += precio;
+    mostrarCarrito();
+}
+
+function mostrarCarrito(){
+    let lista = document.getElementById("lista-carrito");
+    lista.innerHTML = "";
+
+    carrito.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item.nombre + " - $" + item.precio;
+        lista.appendChild(li);
+    });
+
+    document.getElementById("total").textContent = "Total: $" + total;
+}
+
+function comprar(){
+    if(carrito.length === 0){
+        alert("Tu carrito está vacío");
+        return;
+    }
+
+    let mensaje = "Hola, quiero comprar:\n";
+
+    carrito.forEach(item => {
+        mensaje += "- " + item.nombre + "\n";
+    });
+
+    mensaje += "Total: $" + total;
+
+    let telefono = "521XXXXXXXXXX"; // 🔥 PON TU NÚMERO
+
+    let url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+
+    window.open(url, "_blank");
+}
+
+</script>
 
 </body>
 </html>
