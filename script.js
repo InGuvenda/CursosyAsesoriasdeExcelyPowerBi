@@ -48,6 +48,6 @@ function comprar(){
 
     mensaje += "Total: $" + total;
 
-    let url = "https://wa.me/52TU_NUMERO?text=" + encodeURIComponent(mensaje);
+    let url = "https://wa.me/523333945657?text=" + encodeURIComponent(mensaje);
     window.open(url, "_blank");
 }
