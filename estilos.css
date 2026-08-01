@@ -1,0 +1,43 @@
+body{
+  font-family: Arial;
+  margin:0;
+  background:#f4f4f4;
+}
+
+header{
+  background:#1f3c88;
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
+.productos{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  padding:20px;
+}
+
+.producto{
+  background:white;
+  padding:15px;
+  width:200px;
+  border-radius:10px;
+  text-align:center;
+}
+
+button{
+  background:#f9a826;
+  border:none;
+  padding:10px;
+  cursor:pointer;
+}
+
+.carrito{
+  position:fixed;
+  bottom:0;
+  right:0;
+  background:white;
+  width:200px;
+  padding:10px;
+}

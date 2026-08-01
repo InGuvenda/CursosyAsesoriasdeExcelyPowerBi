@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cursos de Excel - Sandra Infante</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<header>
+  <h1>📊 Cursos de Excel</h1>
+  <p>Aprende Excel y Power BI desde cero</p>
+</header>
+
+<section class="productos">
+
+  <div class="producto">
+    <h2>Excel Básico</h2>
+    <p>$199 MXN</p>
+    <button onclick="agregarCarrito('Excel Básico',199)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <h2>Excel Intermedio</h2>
+    <p>$299 MXN</p>
+    <button onclick="agregarCarrito('Excel Intermedio',299)">Agregar</button>
+  </div>
+
+</section>
+
+<div class="carrito">
+  <h3>🛒 Carrito</h3>
+  <ul id="lista-carrito"></ul>
+  <p id="total"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
