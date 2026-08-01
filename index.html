@@ -12,7 +12,7 @@ body{
   margin:0;
   font-family: Arial, sans-serif;
   background:#f5f5f5;
-  padding-bottom:120px;
+  padding-bottom:130px;
 }
 
 /* HEADER */
@@ -34,19 +34,19 @@ header{
 .producto{
   background:white;
   padding:15px;
-  border-radius:10px;
+  border-radius:12px;
   text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
   transition:0.3s;
 }
 
 .producto:hover{
-  transform:translateY(-5px);
+  transform:scale(1.03);
 }
 
 .producto img{
   width:100%;
-  max-width:180px;
+  max-width:160px;
 }
 
 /* BOTONES */
@@ -56,22 +56,32 @@ button{
   border:none;
   padding:10px;
   cursor:pointer;
-  border-radius:5px;
+  border-radius:6px;
   width:100%;
   margin-top:5px;
+  transition:0.2s;
 }
 
 button:hover{
   background:#084d2c;
 }
 
-/* BOTON BLOQUEADO */
 .bloqueado{
   background:gray;
   cursor:not-allowed;
 }
 
-/* CARRITO PRO */
+/* DESCARGA */
+.descarga{
+  display:none;
+  background:#1e88e5;
+}
+
+.descarga:hover{
+  background:#1565c0;
+}
+
+/* CARRITO */
 .carrito{
   position:fixed;
   bottom:10px;
@@ -82,33 +92,31 @@ button:hover{
   background:white;
   border-radius:15px;
   padding:15px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.25);
+  box-shadow:0 5px 25px rgba(0,0,0,0.3);
+  animation:fadeIn 0.5s;
 }
 
-.carrito h3{
-  margin:0 0 10px 0;
-  text-align:center;
+@keyframes fadeIn{
+  from{opacity:0; transform:translate(-50%,20px);}
+  to{opacity:1; transform:translate(-50%,0);}
 }
 
 .carrito ul{
   max-height:120px;
   overflow:auto;
   padding:0;
-  margin:0;
 }
 
 .carrito li{
   list-style:none;
   display:flex;
   justify-content:space-between;
-  margin-bottom:5px;
   font-size:14px;
 }
 
 .eliminar{
   color:red;
   cursor:pointer;
-  font-weight:bold;
 }
 
 /* TOTAL */
@@ -116,17 +124,6 @@ button:hover{
   font-weight:bold;
   text-align:center;
   margin:10px 0;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-  header h1{
-    font-size:20px;
-  }
-
-  .carrito{
-    width:95%;
-  }
 }
 
 </style>
@@ -146,105 +143,122 @@ button:hover{
     <img src="img/logo excel basico.png">
     <h2>Excel Básico</h2>
     <p>$600 MXN</p>
-    <button onclick="agregarCarrito('Excel Básico',600)">Agregar al carrito</button>
-    <button class="bloqueado">🔒 Disponible después de compra</button>
+    <button onclick="agregarCarrito('Excel Básico',600)">Agregar</button>
+    <button class="bloqueado">🔒 Compra para desbloquear</button>
+    <a href="archivos/CURSO BASICO DE EXCEL 2026.xlsx" class="descarga">📥 Descargar</a>
   </div>
 
   <div class="producto">
     <img src="img/logo excel intermedio.png">
     <h2>Excel Intermedio</h2>
     <p>$600 MXN</p>
-    <button onclick="agregarCarrito('Excel Intermedio',600)">Agregar al carrito</button>
-    <button class="bloqueado">🔒 Disponible después de compra</button>
+    <button onclick="agregarCarrito('Excel Intermedio',600)">Agregar</button>
+    <button class="bloqueado">🔒 Compra para desbloquear</button>
+    <a href="archivos/CURSO MEDIO DE EXCEL 2026.xlsx" class="descarga">📥 Descargar</a>
   </div>
 
   <div class="producto">
     <img src="img/logo Excel Avanzado.png">
     <h2>Excel Avanzado</h2>
     <p>$600 MXN</p>
-    <button onclick="agregarCarrito('Excel Avanzado',600)">Agregar al carrito</button>
-    <button class="bloqueado">🔒 Disponible después de compra</button>
+    <button onclick="agregarCarrito('Excel Avanzado',600)">Agregar</button>
+    <button class="bloqueado">🔒 Compra para desbloquear</button>
+    <a href="archivos/CURSO AVANZADO DE EXCEL.pdf" class="descarga">📥 Descargar</a>
   </div>
 
   <div class="producto">
     <img src="img/logo power bi basico.png">
     <h2>Power BI Básico</h2>
     <p>$600 MXN</p>
-    <button onclick="agregarCarrito('Power BI Básico',600)">Agregar al carrito</button>
-    <button class="bloqueado">🔒 Disponible después de compra</button>
+    <button onclick="agregarCarrito('Power BI Básico',600)">Agregar</button>
+    <button class="bloqueado">🔒 Compra para desbloquear</button>
+    <a href="archivos/FASHION CITY.pbix" class="descarga">📥 Descargar</a>
   </div>
 
 </section>
 
-<!-- 🛒 CARRITO -->
+<!-- CARRITO -->
 <div class="carrito">
   <h3>🛒 Carrito (<span id="contador">0</span>)</h3>
-
   <ul id="lista-carrito"></ul>
-
   <p class="total" id="total">Total: $0 MXN</p>
-
-  <button onclick="comprar()">Comprar por WhatsApp</button>
+  <button onclick="comprar()">Pagar</button>
 </div>
 
 <script>
 
-let carrito = [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-function agregarCarrito(nombre, precio){
-    carrito.push({nombre, precio});
-    mostrarCarrito();
+function guardarCarrito(){
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-function eliminarProducto(index){
-    carrito.splice(index,1);
-    mostrarCarrito();
+function agregarCarrito(nombre, precio){
+  carrito.push({nombre, precio});
+  guardarCarrito();
+  mostrarCarrito();
+}
+
+function eliminarProducto(i){
+  carrito.splice(i,1);
+  guardarCarrito();
+  mostrarCarrito();
 }
 
 function mostrarCarrito(){
-    let lista = document.getElementById("lista-carrito");
-    let total = 0;
+  let lista = document.getElementById("lista-carrito");
+  let total = 0;
 
-    lista.innerHTML = "";
+  lista.innerHTML = "";
 
-    carrito.forEach((item, index) => {
-        let li = document.createElement("li");
+  carrito.forEach((item,i)=>{
+    let li = document.createElement("li");
+    li.innerHTML = `
+      ${item.nombre} - $${item.precio}
+      <span class="eliminar" onclick="eliminarProducto(${i})">❌</span>
+    `;
+    lista.appendChild(li);
+    total += item.precio;
+  });
 
-        li.innerHTML = `
-            ${item.nombre} - $${item.precio}
-            <span class="eliminar" onclick="eliminarProducto(${index})">❌</span>
-        `;
-
-        lista.appendChild(li);
-        total += item.precio;
-    });
-
-    document.getElementById("total").textContent = "Total: $" + total + " MXN";
-    document.getElementById("contador").textContent = carrito.length;
+  document.getElementById("total").textContent = "Total: $" + total + " MXN";
+  document.getElementById("contador").textContent = carrito.length;
 }
 
 function comprar(){
-    if(carrito.length === 0){
-        alert("Tu carrito está vacío");
-        return;
-    }
+  if(carrito.length === 0){
+    alert("Carrito vacío");
+    return;
+  }
 
-    let mensaje = "Hola, quiero comprar:%0A";
+  // Simulación de pago exitoso
+  alert("✅ Pago realizado con éxito");
 
-    carrito.forEach(item => {
-        mensaje += "- " + item.nombre + "%0A";
-    });
+  desbloquearDescargas();
 
-    let total = carrito.reduce((acc, item) => acc + item.precio, 0);
-
-    mensaje += "Total: $" + total + " MXN";
-
-    let telefono = "523333945657";
-
-    let url = "https://wa.me/" + telefono + "?text=" + mensaje;
-
-    window.open(url, "_blank");
+  carrito = [];
+  guardarCarrito();
+  mostrarCarrito();
 }
+
+function desbloquearDescargas(){
+  document.querySelectorAll(".bloqueado").forEach(btn=>{
+    btn.style.display = "none";
+  });
+
+  document.querySelectorAll(".descarga").forEach(btn=>{
+    btn.style.display = "block";
+  });
+
+  localStorage.setItem("comprado", "true");
+}
+
+// Mantener desbloqueo
+if(localStorage.getItem("comprado") === "true"){
+  desbloquearDescargas();
+}
+
+mostrarCarrito();
 
 </script>
 
