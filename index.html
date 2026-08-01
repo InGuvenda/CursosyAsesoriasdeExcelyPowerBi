@@ -12,6 +12,7 @@ body{
   margin:0;
   font-family: Arial, sans-serif;
   background:#f5f5f5;
+  padding-bottom:120px;
 }
 
 /* HEADER */
@@ -36,6 +37,11 @@ header{
   border-radius:10px;
   text-align:center;
   box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.producto:hover{
+  transform:translateY(-5px);
 }
 
 .producto img{
@@ -43,6 +49,7 @@ header{
   max-width:180px;
 }
 
+/* BOTONES */
 button{
   background:#0a5c36;
   color:white;
@@ -50,6 +57,8 @@ button{
   padding:10px;
   cursor:pointer;
   border-radius:5px;
+  width:100%;
+  margin-top:5px;
 }
 
 button:hover{
@@ -62,37 +71,61 @@ button:hover{
   cursor:not-allowed;
 }
 
-/* CARRITO */
+/* CARRITO PRO */
 .carrito{
   position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:95%;
+  max-width:500px;
   background:white;
-  border-top:3px solid #0a5c36;
-  padding:10px;
-  box-shadow:0 -2px 10px rgba(0,0,0,0.2);
+  border-radius:15px;
+  padding:15px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.25);
+}
+
+.carrito h3{
+  margin:0 0 10px 0;
+  text-align:center;
 }
 
 .carrito ul{
-  max-height:100px;
+  max-height:120px;
   overflow:auto;
   padding:0;
+  margin:0;
 }
 
 .carrito li{
   list-style:none;
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:5px;
+  font-size:14px;
 }
 
-/* ESPACIO PARA QUE NO TAPE */
-body{
-  padding-bottom:150px;
+.eliminar{
+  color:red;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* TOTAL */
+.total{
+  font-weight:bold;
+  text-align:center;
+  margin:10px 0;
 }
 
 /* MOBILE */
 @media(max-width:600px){
   header h1{
     font-size:20px;
+  }
+
+  .carrito{
+    width:95%;
   }
 }
 
@@ -109,63 +142,35 @@ body{
 
 <section class="productos">
 
-  <!-- CURSO 1 -->
   <div class="producto">
     <img src="img/logo excel basico.png">
     <h2>Excel Básico</h2>
     <p>$600 MXN</p>
-
-    <button onclick="agregarCarrito('Excel Básico',600)">
-      Agregar al carrito
-    </button>
-
-    <br><br>
-
+    <button onclick="agregarCarrito('Excel Básico',600)">Agregar al carrito</button>
     <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
-  <!-- CURSO 2 -->
   <div class="producto">
     <img src="img/logo excel intermedio.png">
     <h2>Excel Intermedio</h2>
     <p>$600 MXN</p>
-
-    <button onclick="agregarCarrito('Excel Intermedio',600)">
-      Agregar al carrito
-    </button>
-
-    <br><br>
-
+    <button onclick="agregarCarrito('Excel Intermedio',600)">Agregar al carrito</button>
     <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
-  <!-- CURSO 3 -->
   <div class="producto">
     <img src="img/logo Excel Avanzado.png">
     <h2>Excel Avanzado</h2>
     <p>$600 MXN</p>
-
-    <button onclick="agregarCarrito('Excel Avanzado',800)">
-      Agregar al carrito
-    </button>
-
-    <br><br>
-
+    <button onclick="agregarCarrito('Excel Avanzado',600)">Agregar al carrito</button>
     <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
-  <!-- CURSO 4 -->
   <div class="producto">
     <img src="img/logo power bi basico.png">
     <h2>Power BI Básico</h2>
     <p>$600 MXN</p>
-
-    <button onclick="agregarCarrito('Power BI Básico',349)">
-      Agregar al carrito
-    </button>
-
-    <br><br>
-
+    <button onclick="agregarCarrito('Power BI Básico',600)">Agregar al carrito</button>
     <button class="bloqueado">🔒 Disponible después de compra</button>
   </div>
 
@@ -173,39 +178,49 @@ body{
 
 <!-- 🛒 CARRITO -->
 <div class="carrito">
-  <h3>🛒 Carrito</h3>
+  <h3>🛒 Carrito (<span id="contador">0</span>)</h3>
 
   <ul id="lista-carrito"></ul>
 
-  <p id="total">Total: $0</p>
+  <p class="total" id="total">Total: $0 MXN</p>
 
-  <button onclick="comprar()">
-    Comprar por WhatsApp
-  </button>
+  <button onclick="comprar()">Comprar por WhatsApp</button>
 </div>
 
 <script>
 
 let carrito = [];
-let total = 0;
 
 function agregarCarrito(nombre, precio){
     carrito.push({nombre, precio});
-    total += precio;
+    mostrarCarrito();
+}
+
+function eliminarProducto(index){
+    carrito.splice(index,1);
     mostrarCarrito();
 }
 
 function mostrarCarrito(){
     let lista = document.getElementById("lista-carrito");
+    let total = 0;
+
     lista.innerHTML = "";
 
-    carrito.forEach(item => {
+    carrito.forEach((item, index) => {
         let li = document.createElement("li");
-        li.textContent = item.nombre + " - $" + item.precio;
+
+        li.innerHTML = `
+            ${item.nombre} - $${item.precio}
+            <span class="eliminar" onclick="eliminarProducto(${index})">❌</span>
+        `;
+
         lista.appendChild(li);
+        total += item.precio;
     });
 
-    document.getElementById("total").textContent = "Total: $" + total;
+    document.getElementById("total").textContent = "Total: $" + total + " MXN";
+    document.getElementById("contador").textContent = carrito.length;
 }
 
 function comprar(){
@@ -214,17 +229,19 @@ function comprar(){
         return;
     }
 
-    let mensaje = "Hola, quiero comprar:\n";
+    let mensaje = "Hola, quiero comprar:%0A";
 
     carrito.forEach(item => {
-        mensaje += "- " + item.nombre + "\n";
+        mensaje += "- " + item.nombre + "%0A";
     });
 
-    mensaje += "Total: $" + total;
+    let total = carrito.reduce((acc, item) => acc + item.precio, 0);
 
-    let telefono = "523333945657"; // 🔥 PON TU NÚMERO
+    mensaje += "Total: $" + total + " MXN";
 
-    let url = "https://wa.me/" + telefono + "?text=" + encodeURIComponent(mensaje);
+    let telefono = "523333945657";
+
+    let url = "https://wa.me/" + telefono + "?text=" + mensaje;
 
     window.open(url, "_blank");
 }
