@@ -10,32 +10,97 @@
 <body>
 
 <header>
-  <h1>📊 Cursos de Excel</h1>
-  <p>Aprende Excel y Power BI desde cero</p>
+  <h1>📊 Cursos de Excel & Power BI</h1>
+  <p>Aprende desde cero hasta nivel profesional</p>
 </header>
 
 <section class="productos">
 
+  <!-- CURSO 1 -->
   <div class="producto">
+    <img src="img/excel_basico.jpg" alt="Excel Básico">
     <h2>Excel Básico</h2>
-    <p>$199 MXN</p>
-    <button onclick="agregarCarrito('Excel Básico',199)">Agregar</button>
+    <p>$600 MXN</p>
+
+    <button onclick="agregarCarrito('Excel Básico',600)">
+      Agregar al carrito
+    </button>
+
+    <br><br>
+
+    <a href="archivos/curso_basico.xlsx" download>
+      📥 Descargar muestra
+    </a>
   </div>
 
+  <!-- CURSO 2 -->
   <div class="producto">
+    <img src="img/excel_intermedio.jpg" alt="Excel Intermedio">
     <h2>Excel Intermedio</h2>
-    <p>$299 MXN</p>
-    <button onclick="agregarCarrito('Excel Intermedio',299)">Agregar</button>
+    <p>$600 MXN</p>
+
+    <button onclick="agregarCarrito('Excel Intermedio',600)">
+      Agregar al carrito
+    </button>
+
+    <br><br>
+
+    <a href="archivos/curso_intermedio.xlsx" download>
+      📥 Descargar muestra
+    </a>
+  </div>
+
+  <!-- CURSO 3 -->
+  <div class="producto">
+    <img src="img/excel_avanzado.jpg" alt="Excel Avanzado">
+    <h2>Excel Avanzado</h2>
+    <p>$800 MXN</p>
+
+    <button onclick="agregarCarrito('Excel Avanzado',800)">
+      Agregar al carrito
+    </button>
+
+    <br><br>
+
+    <a href="archivos/curso_avanzado.xlsx" download>
+      📥 Descargar muestra
+    </a>
+  </div>
+
+  <!-- CURSO 4 -->
+  <div class="producto">
+    <img src="img/powerbi.jpg" alt="Power BI">
+    <h2>Power BI Básico</h2>
+    <p>$600 MXN</p>
+
+    <button onclick="agregarCarrito('Power BI Básico',349)">
+      Agregar al carrito
+    </button>
+
+    <br><br>
+
+    <a href="archivos/powerbi.xlsx" download>
+      📥 Descargar muestra
+    </a>
   </div>
 
 </section>
 
+<!-- 🛒 CARRITO -->
 <div class="carrito">
   <h3>🛒 Carrito</h3>
+
   <ul id="lista-carrito"></ul>
-  <p id="total"></p>
+
+  <p id="total">Total: $0</p>
+
+  <button onclick="comprar()">
+    Comprar por WhatsApp
+  </button>
 </div>
 
+<!-- JS -->
 <script src="script.js"></script>
+
 </body>
 </html>
