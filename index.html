@@ -1,87 +1,157 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cursos de Excel - Sandra Infante</title>
+<title>Cursos de Excel y Power BI - Sandra Infante</title>
 
-<script src="https://www.paypal.com/sdk/js?client-id=Adcs_mafq4FKAAcMDZb3g_VbWvOTSTPjauSzLrN5zyvdcBY-BHW41ukVm4rGXNXGSbkwbOUKTuUKz4YE&currency=MXN&components=buttons,marks,funding-eligibility"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=Adcs_mafq4FKAAcMDZb3g_VbWvOTSTPjauSzLrN5zyvdcBY-BHW41ukVm4rGXNXGSbkwbOUKTuUKz4YE&currency=MXN&components=buttons"></script>
 
 <style>
-body{
-  margin:0;
-  font-family: Arial;
-  background:#f5f5f5;
+* {
+  box-sizing: border-box;
 }
 
-header{
-  text-align:center;
-  background:#0a5c36;
-  color:white;
-  padding:20px;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
 }
 
-.contenedor{
-  display:flex;
-  flex-wrap:wrap;
+header {
+  text-align: center;
+  background: #0a5c36;
+  color: white;
+  padding: 20px;
 }
 
-.productos{
-  flex:3;
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  gap:20px;
-  padding:20px;
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-.producto{
-  background:white;
-  padding:15px;
-  border-radius:10px;
-  text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+.productos {
+  flex: 3;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
-.producto img{
-  width:120px;
-  margin-bottom:10px;
+.producto {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-button{
-  background:#0a5c36;
-  color:white;
-  border:none;
-  padding:10px;
-  cursor:pointer;
-  border-radius:5px;
+.producto img {
+  width: 120px;
+  max-width: 100%;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 10px;
 }
 
-.carrito{
-  flex:1;
-  min-width:300px;
-  background:white;
-  border-left:4px solid #0a5c36;
-  padding:15px;
-  height:100vh;
-  position:sticky;
-  top:0;
+.precio {
+  color: #0a5c36;
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.total{
-  font-weight:bold;
-  margin-top:10px;
+button {
+  background: #0a5c36;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.descargas{
-  padding:20px;
-  display:none;
+button:hover {
+  background: #084629;
 }
 
-.descargas a{
-  display:block;
-  margin:10px 0;
-  color:green;
-  font-weight:bold;
+.carrito {
+  flex: 1;
+  min-width: 280px;
+  background: white;
+  border-left: 4px solid #0a5c36;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+#lista-carrito {
+  padding-left: 20px;
+}
+
+#lista-carrito li {
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+
+.btn-eliminar {
+  background: #b42318;
+  padding: 5px 8px;
+  margin-left: 5px;
+}
+
+.total {
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.descargas {
+  padding: 20px;
+  display: none;
+  background: white;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.descargas a {
+  display: block;
+  margin: 12px 0;
+  color: #0a5c36;
+  font-weight: bold;
+}
+
+.aviso {
+  font-size: 13px;
+  color: #555;
+}
+
+@media (max-width: 700px) {
+  .contenedor {
+    display: block;
+  }
+
+  .productos {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .carrito {
+    position: static;
+    max-height: none;
+    min-width: 0;
+    border-left: none;
+    border-top: 4px solid #0a5c36;
+  }
+
+  .producto {
+    padding: 12px;
+  }
 }
 </style>
 </head>
@@ -89,160 +159,314 @@ button{
 <body>
 
 <header>
-  <h1>📊 Cursos de Excel & Power BI</h1>
+  <h1>📊 Cursos de Excel y Power BI</h1>
+  <p>Capacitación práctica para impulsar tus habilidades</p>
 </header>
 
 <div class="contenedor">
 
-<section class="productos">
+  <section class="productos">
 
-<!-- EXCEL BASICO -->
-<div class="producto">
-  <img src="img/logo excel basico.png">
-  <h2>Excel Básico</h2>
-  <p>Aprende desde cero</p>
-  <p><b>$299 MXN</b></p>
-  <button onclick="agregarCarrito('basico',299)">Agregar</button>
-</div>
+    <!-- EXCEL BÁSICO -->
+    <div class="producto">
+      <img src="img/logo excel basico.png" alt="Curso de Excel Básico">
+      <h2>Excel Básico</h2>
+      <p>Aprende desde cero</p>
+      <p class="precio">$600 MXN</p>
+      <button onclick="agregarCarrito('basico')">
+        Agregar al carrito
+      </button>
+    </div>
 
-<!-- EXCEL INTERMEDIO -->
-<div class="producto">
-  <img src="img/logo excel intermedio.png">
-  <h2>Excel Intermedio</h2>
-  <p>Fórmulas y funciones</p>
-  <p><b>$299 MXN</b></p>
-  <button onclick="agregarCarrito('intermedio',299)">Agregar</button>
-</div>
+    <!-- EXCEL INTERMEDIO -->
+    <div class="producto">
+      <img src="img/logo excel intermedio.png" alt="Curso de Excel Intermedio">
+      <h2>Excel Intermedio</h2>
+      <p>Fórmulas y funciones</p>
+      <p class="precio">$600 MXN</p>
+      <button onclick="agregarCarrito('intermedio')">
+        Agregar al carrito
+      </button>
+    </div>
 
-<!-- EXCEL AVANZADO -->
-<div class="producto">
-  <img src="img/logo Excel Avanzado.png">
-  <h2>Excel Avanzado</h2>
-  <p>Macros y automatización</p>
-  <p><b>$299 MXN</b></p>
-  <button onclick="agregarCarrito('avanzado',299)">Agregar</button>
-</div>
+    <!-- EXCEL AVANZADO -->
+    <div class="producto">
+      <img src="img/logo Excel Avanzado.png" alt="Curso de Excel Avanzado">
+      <h2>Excel Avanzado</h2>
+      <p>Macros y automatización</p>
+      <p class="precio">$600 MXN</p>
+      <button onclick="agregarCarrito('avanzado')">
+        Agregar al carrito
+      </button>
+    </div>
 
-<!-- 🔥 NUEVO POWER BI -->
-<div class="producto">
-  <img src="img/logo power bi basico.png">
-  <h2>Power BI Básico</h2>
-  <p>Dashboards y análisis</p>
-  <p><b>$299 MXN</b></p>
-  <button onclick="agregarCarrito('powerbi',299)">Agregar</button>
-</div>
+    <!-- POWER BI -->
+    <div class="producto">
+      <img src="img/logo power bi basico.png" alt="Curso de Power BI Básico">
+      <h2>Power BI Básico</h2>
+      <p>Dashboards y análisis de datos</p>
+      <p class="precio">$600 MXN</p>
+      <button onclick="agregarCarrito('powerbi')">
+        Agregar al carrito
+      </button>
+    </div>
 
-</section>
+  </section>
 
-<div class="carrito">
-  <h3>🛒 Carrito</h3>
-  <ul id="lista-carrito"></ul>
-  <p class="total" id="total">Total: $0</p>
-  <div id="paypal-button-container"></div>
-</div>
+  <!-- CARRITO -->
+  <aside class="carrito">
+    <h3>🛒 Tu carrito</h3>
+
+    <ul id="lista-carrito"></ul>
+
+    <p class="total" id="total">Total: $0.00 MXN</p>
+
+    <div id="paypal-button-container"></div>
+
+    <p class="aviso">
+      El pago se procesa mediante PayPal. Las descargas se mostrarán
+      después de que PayPal confirme el pago.
+    </p>
+  </aside>
 
 </div>
 
 <!-- DESCARGAS -->
-<div class="descargas" id="descargas">
+<section class="descargas" id="descargas">
   <h2>📥 Descarga tus cursos</h2>
+  <p>Tu pago ha sido aprobado. Aquí están los materiales disponibles:</p>
 
-  <a id="link-basico" href="archivos/CURSO BASICO DE EXCEL 2026.xlsx" target="_blank">Excel Básico</a>
-  <a id="link-intermedio" href="archivos/CURSO MEDIO DE EXCEL 2026.xlsx" target="_blank">Excel Intermedio</a>
-  <a id="link-avanzado" href="archivos/CURSO AVANZADO DE EXCEL.pdf" target="_blank">Excel Avanzado</a>
-  <a id="link-avanzado" href="archivos/Manual Excel Avanzado 2026.xlsx" target="_blank">Excel Avanzado</a>
-  <a id="link-avanzado" href="archivos/Tronar contraseña.xlsm" target="_blank">Excel Avanzado</a>
-  <a id="link-powerbi" href="archivos/FASHION CITY.pbix" target="_blank">Power BI Básico</a>
-</div>
+  <div id="enlaces-descarga"></div>
+</section>
 
 <script>
+const PRECIO_CURSO = 600;
+
+const cursos = {
+  basico: {
+    nombre: "Excel Básico",
+    archivos: [
+      {
+        nombre: "Curso Básico de Excel 2026",
+        ruta: "archivos/CURSO BASICO DE EXCEL 2026.xlsx"
+      }
+    ]
+  },
+
+  intermedio: {
+    nombre: "Excel Intermedio",
+    archivos: [
+      {
+        nombre: "Curso Medio de Excel 2026",
+        ruta: "archivos/CURSO MEDIO DE EXCEL 2026.xlsx"
+      }
+    ]
+  },
+
+  avanzado: {
+    nombre: "Excel Avanzado",
+    archivos: [
+      {
+        nombre: "Curso Avanzado de Excel",
+        ruta: "archivos/CURSO AVANZADO DE EXCEL.pdf"
+      },
+      {
+        nombre: "Manual de Excel Avanzado 2026",
+        ruta: "archivos/Manual Excel Avanzado 2026.xlsx"
+      },
+      {
+        nombre: "Archivo de prácticas con macros",
+        ruta: "archivos/Tronar contraseña.xlsm"
+      }
+    ]
+  },
+
+  powerbi: {
+    nombre: "Power BI Básico",
+    archivos: [
+      {
+        nombre: "Proyecto Fashion City",
+        ruta: "archivos/FASHION CITY.pbix"
+      }
+    ]
+  }
+};
 
 let carrito = [];
 let total = 0;
+let pagoEnProceso = false;
 
-function agregarCarrito(nombre, precio){
-  carrito.push({nombre, precio});
-  total += precio;
-  mostrarCarrito();
-  renderPayPal();
+function agregarCarrito(id) {
+  if (!cursos[id]) return;
+
+  carrito.push({
+    id: id,
+    nombre: cursos[id].nombre,
+    precio: PRECIO_CURSO
+  });
+
+  actualizarCarrito();
 }
 
-function mostrarCarrito(){
-  let lista = document.getElementById("lista-carrito");
+function actualizarCarrito() {
+  total = carrito.reduce((suma, item) => suma + item.precio, 0);
+
+  const lista = document.getElementById("lista-carrito");
   lista.innerHTML = "";
 
-  carrito.forEach((item,i)=>{
-    lista.innerHTML += `<li>${item.nombre} - $${item.precio}
-    <button onclick="eliminar(${i})">❌</button></li>`;
+  carrito.forEach((item, indice) => {
+    const li = document.createElement("li");
+    li.appendChild(
+      document.createTextNode(
+        item.nombre + " - " +
+        item.precio.toLocaleString("es-MX", {
+          style: "currency",
+          currency: "MXN"
+        }) + " "
+      )
+    );
+
+    const boton = document.createElement("button");
+    boton.type = "button";
+    boton.className = "btn-eliminar";
+    boton.textContent = "Eliminar";
+    boton.onclick = () => eliminar(indice);
+
+    li.appendChild(boton);
+    lista.appendChild(li);
   });
 
-  document.getElementById("total").textContent = "Total: $" + total;
-}
+  document.getElementById("total").textContent =
+    "Total: " + total.toLocaleString("es-MX", {
+      style: "currency",
+      currency: "MXN"
+    });
 
-function eliminar(i){
-  total -= carrito[i].precio;
-  carrito.splice(i,1);
-  mostrarCarrito();
   renderPayPal();
 }
 
-function desbloquearDescargas(){
+function eliminar(indice) {
+  if (pagoEnProceso) return;
 
-  document.getElementById("descargas").style.display = "block";
-
-  document.querySelectorAll(".descargas a").forEach(a=>{
-    a.style.display = "none";
-  });
-
-  carrito.forEach(item=>{
-    document.getElementById("link-"+item.nombre).style.display = "block";
-  });
-
-  window.scrollTo(0,document.body.scrollHeight);
+  carrito.splice(indice, 1);
+  actualizarCarrito();
 }
 
-function renderPayPal(){
+function renderPayPal() {
+  const contenedor = document.getElementById("paypal-button-container");
+  contenedor.innerHTML = "";
 
-  document.getElementById("paypal-button-container").innerHTML = "";
+  if (total === 0 || pagoEnProceso) return;
 
-  if(total === 0) return;
+  if (!window.paypal) {
+    contenedor.textContent =
+      "No se pudo cargar PayPal. Recarga la página e inténtalo nuevamente.";
+    return;
+  }
 
   paypal.Buttons({
+    createOrder: (data, actions) => {
+      if (carrito.length === 0 || total <= 0) {
+        throw new Error("El carrito está vacío.");
+      }
 
-    createOrder: (data, actions)=>{
+      const importe = carrito.reduce(
+        (suma, item) => suma + item.precio, 0
+      );
+
       return actions.order.create({
         purchase_units: [{
-          description: "Cursos Excel y Power BI",
-          amount: { value: total.toFixed(2) }
+          description: "Cursos de Excel y Power BI",
+          amount: {
+            currency_code: "MXN",
+            value: importe.toFixed(2)
+          }
         }]
       });
     },
 
-    onApprove: (data, actions)=>{
-      return actions.order.capture().then((details)=>{
+    onApprove: (data, actions) => {
+      pagoEnProceso = true;
+      contenedor.textContent = "Confirmando tu pago...";
 
-        alert("Pago completado por " + details.payer.name.given_name);
+      return actions.order.capture().then((details) => {
+        if (details.status !== "COMPLETED") {
+          pagoEnProceso = false;
+          alert("El pago no aparece como completado. Contacta a soporte.");
+          actualizarCarrito();
+          return;
+        }
 
-        desbloquearDescargas();
+        const cursosComprados = [...new Set(
+          carrito.map(item => item.id)
+        )];
+
+        mostrarDescargas(cursosComprados);
+
+        alert(
+          "¡Gracias por tu compra, " +
+          (details.payer?.name?.given_name || "cliente") +
+          "! El pago fue completado."
+        );
 
         carrito = [];
         total = 0;
+        pagoEnProceso = false;
+        actualizarCarrito();
 
-        mostrarCarrito();
-        renderPayPal();
-
+        document.getElementById("descargas").scrollIntoView({
+          behavior: "smooth"
+        });
+      }).catch((error) => {
+        console.error("Error al confirmar el pago:", error);
+        pagoEnProceso = false;
+        alert(
+          "No se pudo confirmar el pago. Verifica el estado de tu operación en PayPal antes de volver a pagar."
+        );
+        actualizarCarrito();
       });
     },
 
-    onError: (err)=>{
-      alert("Error en el pago");
-      console.log(err);
+    onCancel: () => {
+      alert("El pago fue cancelado. Tu carrito sigue disponible.");
+    },
+
+    onError: (error) => {
+      console.error("Error de PayPal:", error);
+      pagoEnProceso = false;
+      alert("Ocurrió un error con PayPal. Inténtalo nuevamente.");
+      actualizarCarrito();
     }
 
-  }).render('#paypal-button-container');
-
+  }).render("#paypal-button-container");
 }
 
+function mostrarDescargas(idsComprados) {
+  const seccion = document.getElementById("descargas");
+  const contenedor = document.getElementById("enlaces-descarga");
+
+  contenedor.innerHTML = "";
+
+  idsComprados.forEach(id => {
+    const curso = cursos[id];
+    if (!curso) return;
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = curso.nombre;
+    contenedor.appendChild(titulo);
+
+    curso.archivos.forEach(archivo => {
+      const enlace = document.createElement("a");
+      enlace.href = archivo.ruta;
+      enlace.textContent = "📄 " + archivo.nombre;
+      enlace.target = "_blank";
+      enlace.rel = "noopener noreferrer";
+      contenedor.appendChild(enlace);
+    });
+  });
+
+  seccion.style.display = "block";
+}
 </script>
 
 </body>
